@@ -20,26 +20,6 @@ namespace HexBinaryFileConverter
             InitializeComponent();
         }
 
-        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button1_Click_1(object sender, EventArgs e)
         {
 
@@ -50,12 +30,6 @@ namespace HexBinaryFileConverter
                 else
                     MessageBox.Show("Choose a hex file");
             }
-
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
 
         }
 
@@ -74,12 +48,27 @@ namespace HexBinaryFileConverter
                 MessageBox.Show("Choose a hex file");
         }
 
-        void ConvertFile(String path) {
+       
+        private void Output_Click(object sender, EventArgs e)
+        {
+            String binpath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            binpath += "\\app.bin";
+            try
+            {
+                System.Diagnostics.Process.Start(binpath);
+            }catch
+            {
+                MessageBox.Show("File Not Found!");
+            }
+
+        }
+        void ConvertFile(String path)
+        {
 
             // Open hex file to convert .
             // Create a new bin file to push the result.
             StreamReader hexFile = new StreamReader(path);
-            if(hexFile == null)
+            if (hexFile == null)
             {
                 MessageBox.Show("Invalid Path");
                 return;
@@ -91,7 +80,7 @@ namespace HexBinaryFileConverter
             int dataLength;
             int datainit = 9;
             int FileSize = 0;
-            int packets  = 0;
+            int packets = 0;
             while (line != null)
             {
                 if (line[7] != '0' || line[8] != '0') // Data Record
@@ -102,10 +91,10 @@ namespace HexBinaryFileConverter
                 // number of bytes in a record
                 dataLength = int.Parse(line.Substring(1, 2), System.Globalization.NumberStyles.HexNumber);
                 FileSize += dataLength;
-                
+
                 // one byte is 2 Hex chars     
                 String bin = "";
-                for (int i = 0; i < dataLength*2; i += 2)
+                for (int i = 0; i < dataLength * 2; i += 2)
                 {
                     string HexByte = "";
                     HexByte += line[datainit + i];
@@ -137,7 +126,8 @@ namespace HexBinaryFileConverter
                 if (deci % 2 > 0)
                 {
                     res += '1';
-                } else
+                }
+                else
                 {
                     res += '0';
                 }
@@ -145,7 +135,7 @@ namespace HexBinaryFileConverter
             }
             while (res.Length < 8) { res += "0"; }
 
-           char[] arr = res.ToCharArray();
+            char[] arr = res.ToCharArray();
             Array.Reverse(arr);
             return new string(arr);
         }
@@ -154,6 +144,11 @@ namespace HexBinaryFileConverter
         {
             int deci = int.Parse(hex, System.Globalization.NumberStyles.HexNumber);
             return deci;
+        }
+
+        private void textBox4_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -166,11 +161,23 @@ namespace HexBinaryFileConverter
 
         }
 
-        private void Output_Click(object sender, EventArgs e)
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
-            String binpath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            binpath += "\\app.bin";
-            System.Diagnostics.Process.Start(binpath);
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
 
         }
     }
